@@ -53,7 +53,12 @@ button_states = {button: False for button in BUTTON_IMAGES}
 # Define the mapping between touchscreen buttons and keyboard keys
 BUTTON_KEY_MAPPING = {
     "up": pygame.K_UP,
-    # Define mappings for other buttons here
+    "down": pygame.K_DOWN,
+    "left": pygame.K_LEFT,
+    "right": pygame.K_RIGHT,
+    "button1": pygame.K_SPACE,  # Map button1 to the spacebar
+    "button2": pygame.K_RETURN,  # Map button2 to the Enter key
+    # Add more mappings as needed
 }
 
 # Initialize the screen
@@ -92,10 +97,18 @@ def main():
                     if button_rect.collidepoint(touch_x, touch_y):
                         # Set touch state for the button
                         touch_states[button] = True
+                        # Translate button press to key press
+                        key = BUTTON_KEY_MAPPING.get(button)
+                        if key is not None:
+                            pygame.event.post(pygame.event.Event(pygame.KEYDOWN, key=key))
             elif event.type == pygame.FINGERUP:
                 # Reset touch state when lifting finger
                 for button in BUTTON_IMAGES:
                     touch_states[button] = False
+                    # Translate button release to key release
+                    key = BUTTON_KEY_MAPPING.get(button)
+                    if key is not None:
+                        pygame.event.post(pygame.event.Event(pygame.KEYUP, key=key))
 
         # Update button states based on touch states
         for button in BUTTON_IMAGES:
