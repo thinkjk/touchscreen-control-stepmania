@@ -1,5 +1,7 @@
 import pygame
 import sys
+import subprocess
+import pyautogui
 
 # Initialize pygame
 pygame.init()
@@ -52,12 +54,12 @@ button_states = {button: False for button in BUTTON_IMAGES}
 
 # Define the mapping between touchscreen buttons and keyboard keys
 BUTTON_KEY_MAPPING = {
-    "up": pygame.K_UP,
-    "down": pygame.K_DOWN,
-    "left": pygame.K_LEFT,
-    "right": pygame.K_RIGHT,
-    "button1": pygame.K_SPACE,  # Map button1 to the spacebar
-    "button2": pygame.K_RETURN,  # Map button2 to the Enter key
+    "up": "up",
+    "down": "down",
+    "left": "left",
+    "right": "right",
+    "button1": "space",  # Map button1 to the spacebar
+    "button2": "enter",  # Map button2 to the Enter key
     # Add more mappings as needed
 }
 
@@ -80,6 +82,28 @@ def draw_buttons():
         else:
             screen.blit(images["normal"], (button_x, button_y))
 
+# Function to send key presses and releases
+def send_key(key, is_pressed):
+    if is_pressed:
+        pyautogui.keyDown(key)
+    else:
+        pyautogui.keyUp(key)
+
+# Function to bring the main application window into focus
+def focus_main_app():
+    try:
+        subprocess.Popen(["wmctrl", "-a", "Simply Love"])
+    except Exception as e:
+        print(f"Failed to focus main app: {e}")
+
+def send_key(key, is_pressed):
+    if is_pressed:
+        print(f"Pressing key: {key}")
+        pyautogui.keyDown(key)
+    else:
+        print(f"Releasing key: {key}")
+        pyautogui.keyUp(key)
+
 def main():
     # Create a dictionary to keep track of touch states for each button
     touch_states = {button: False for button in BUTTON_IMAGES}
@@ -97,18 +121,21 @@ def main():
                     if button_rect.collidepoint(touch_x, touch_y):
                         # Set touch state for the button
                         touch_states[button] = True
-                        # Translate button press to key press
+                        # Translate button press to key press and send it
                         key = BUTTON_KEY_MAPPING.get(button)
                         if key is not None:
-                            pygame.event.post(pygame.event.Event(pygame.KEYDOWN, key=key))
+                            send_key(key, True)
+                        # Bring the main application window into focus
+                        focus_main_app()
             elif event.type == pygame.FINGERUP:
-                # Reset touch state when lifting finger
+                # Handle button release events here, not immediately after a press event
                 for button in BUTTON_IMAGES:
-                    touch_states[button] = False
-                    # Translate button release to key release
-                    key = BUTTON_KEY_MAPPING.get(button)
-                    if key is not None:
-                        pygame.event.post(pygame.event.Event(pygame.KEYUP, key=key))
+                    if touch_states[button]:
+                        # Translate button release to key release and send it
+                        key = BUTTON_KEY_MAPPING.get(button)
+                        if key is not None:
+                            send_key(key, False)
+                        touch_states[button] = False
 
         # Update button states based on touch states
         for button in BUTTON_IMAGES:
