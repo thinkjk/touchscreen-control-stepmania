@@ -97,6 +97,7 @@ def focus_main_app():
         print(f"Failed to focus main app: {e}")
 
 def send_key(key, is_pressed):
+    focus_main_app()
     if is_pressed:
         print(f"Pressing key: {key}")
         pyautogui.keyDown(key)
