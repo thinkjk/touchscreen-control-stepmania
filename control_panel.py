@@ -1,6 +1,10 @@
 import pygame
 import sys
 import pyautogui
+import os
+
+# Set the position of the pygame window to the second monitor
+os.environ['SDL_VIDEO_WINDOW_POS'] = "0,0"  # for the second monitor
 
 # Initialize the pygame library
 pygame.init()
@@ -42,9 +46,7 @@ BUTTON_KEY_MAPPING = {
 }
 
 # Setting up the game window
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Touchscreen Control Box")
-
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN | pygame.NOFRAME)
 
 #Draws the buttons on the screen
 def draw_buttons(button_states):
@@ -58,7 +60,7 @@ def draw_buttons(button_states):
 def send_key(key, is_pressed):
     action = pyautogui.keyDown if is_pressed else pyautogui.keyUp
     action(key)
-    
+
 #Handle touch events (press and release)
 def handle_touch_event(event, touch_states):
     touch_x, touch_y = event.x * SCREEN_WIDTH, event.y * SCREEN_HEIGHT
