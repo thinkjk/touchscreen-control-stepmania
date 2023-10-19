@@ -105,6 +105,8 @@ def send_key(key, is_pressed):
         print(f"Releasing key: {key}")
         pyautogui.keyUp(key)
 
+pyautogui.PAUSE = 0.05  # Set to a small value, 0.05 seconds
+
 def main():
     # Create a dictionary to keep track of touch states for each button
     touch_states = {button: False for button in BUTTON_IMAGES}
