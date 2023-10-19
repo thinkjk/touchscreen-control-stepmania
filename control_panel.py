@@ -1,6 +1,5 @@
 import pygame
 import sys
-import subprocess
 import pyautogui
 
 pygame.init()
@@ -34,7 +33,6 @@ BUTTON_KEY_MAPPING = {
     "escape": "escape",
 }
 
-# Initialize display
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Touchscreen Control Box")
 
@@ -46,15 +44,22 @@ def draw_buttons(button_states):
         screen.blit(image, (button_x, button_y))
 
 def send_key(key, is_pressed):
-    focus_main_app()
     action = pyautogui.keyDown if is_pressed else pyautogui.keyUp
     action(key)
 
-def focus_main_app():
-    try:
-        subprocess.Popen(["wmctrl", "-a", "Simply Love"])
-    except Exception as e:
-        print(f"Failed to focus main app: {e}")
+def handle_touch_event(event, touch_states):
+    touch_x, touch_y = event.x * SCREEN_WIDTH, event.y * SCREEN_HEIGHT
+
+    for button, (button_x, button_y) in BUTTON_POSITIONS.items():
+        images = BUTTON_IMAGES[button]
+        button_rect = pygame.Rect(button_x, button_y, images["default"].get_width(), images["default"].get_height())
+
+        if button_rect.collidepoint(touch_x, touch_y):
+            touch_states[button] = event.type == pygame.FINGERDOWN
+
+            key = BUTTON_KEY_MAPPING.get(button)
+            if key:
+                send_key(key, touch_states[button])
 
 def main():
     touch_states = {button: False for button in BUTTON_IMAGES}
@@ -65,28 +70,12 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            
-            handle_touch_event(event, touch_states)
+
+            if event.type in [pygame.FINGERDOWN, pygame.FINGERUP]:
+                handle_touch_event(event, touch_states)
+
         draw_buttons(touch_states)
         pygame.display.update()
-
-def handle_touch_event(event, touch_states):
-    if event.type in [pygame.FINGERDOWN, pygame.FINGERUP]:
-        touch_x, touch_y = event.x * SCREEN_WIDTH, event.y * SCREEN_HEIGHT
-        
-        for button, (button_x, button_y) in BUTTON_POSITIONS.items():
-            images = BUTTON_IMAGES[button]
-            button_rect = pygame.Rect(button_x, button_y, images["default"].get_width(), images["default"].get_height())
-            
-            if button_rect.collidepoint(touch_x, touch_y):
-                touch_states[button] = event.type == pygame.FINGERDOWN
-                
-                key = BUTTON_KEY_MAPPING.get(button)
-                if key:
-                    send_key(key, touch_states[button])
-                
-                if event.type == pygame.FINGERDOWN:
-                    focus_main_app()
 
 if __name__ == "__main__":
     main()
