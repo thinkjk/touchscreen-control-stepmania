@@ -5,14 +5,19 @@ import os
 from evdev import InputDevice, ecodes, list_devices
 from select import select
 
+# Get the directory where the script is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # Define images for each button state.
 BUTTON_IMAGES = {
     name: {
-        state: pygame.image.load(f"images/{name.capitalize()}_Arrow_{state.capitalize()}_Scaled.png")
+        state: pygame.image.load(os.path.join(BASE_DIR, f"images/{name.capitalize()}_Arrow_{state.capitalize()}_Scaled.png"))
         for state in ["default", "pressed"]
     }
     for name in ["up", "down", "left", "right", "start", "escape"]
 }
+
+
 
 # Define positions for buttons on the screen.
 BUTTON_POSITIONS = {
@@ -38,15 +43,24 @@ BUTTON_KEY_MAPPING_2 = {
     "down": "s",
     "left": "a",
     "right": "d",
-    "start": "space",
-    "escape": "escape",
+    "start": "f",
+    "escape": "g",
 }
 
-# Define device mappings for each monitor.
+def get_device_path_by_phys(phys_address):
+    """Return the device path for the given physical address, or None if not found."""
+    devices = [InputDevice(path) for path in list_devices()]
+    for device in devices:
+        if device.phys == phys_address:
+            return device.path
+    return None
+
+# Dynamically get the device paths using the physical addresses
 DEVICE_MAPPING = {
-    '1': "/dev/input/event3",
-    '2': "/dev/input/event18",
+    '1': get_device_path_by_phys("usb-0000:00:14.0-2/input0"),  # First touchscreen
+    '2': get_device_path_by_phys("usb-0000:00:14.0-4/input0"),  # Second touchscreen
 }
+
 POSITION_MAPPING = {
     '1': "0,0",
     '2': "800,0",
@@ -88,15 +102,27 @@ def run_for_device(device_path, monitor_number, button_key_mapping):
     os.environ['SDL_VIDEO_WINDOW_POS'] = POSITION_MAPPING[monitor_number]
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN | pygame.NOFRAME)
     touch_states = {button: False for button in BUTTON_IMAGES.keys()}
+    
+    # Draw the buttons immediately after setting up the screen
+    draw_buttons(screen, touch_states)
+    
     pyautogui.PAUSE = 0.05
 
     device = InputDevice(device_path)
+    
     while True:
-        r, _, _ = select([device], [], [])
-        for event in r[0].read():
-            if event.type in (ecodes.EV_ABS, ecodes.EV_KEY):
-                handle_touch_event(event, touch_states, button_key_mapping)
-        draw_buttons(screen, touch_states)
+        # Poll and clear the Pygame event queue
+        for _ in pygame.event.get():
+            pass
+
+        # Add a timeout to the select function (e.g., 0.1 seconds)
+        r, _, _ = select([device], [], [], 0.1)
+        if r:
+            for event in r[0].read():
+                if event.type in (ecodes.EV_ABS, ecodes.EV_KEY):
+                    handle_touch_event(event, touch_states, button_key_mapping)
+            draw_buttons(screen, touch_states)
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
@@ -104,6 +130,6 @@ if __name__ == "__main__":
     monitor_arg = sys.argv[1]
     if monitor_arg not in ["1", "2"]:
         sys.exit("Invalid monitor number. Choose 1 or 2.")
-
+        
     key_mapping = BUTTON_KEY_MAPPING_1 if monitor_arg == "1" else BUTTON_KEY_MAPPING_2
     run_for_device(DEVICE_MAPPING[monitor_arg], monitor_arg, key_mapping)
