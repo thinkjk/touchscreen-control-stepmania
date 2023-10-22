@@ -18,6 +18,7 @@ Prerequisites
 -------------
 
 -   Python 3
+-   pip
 -   `pygame` library
 -   `pyautogui` library
 -   `evdev` library
@@ -27,13 +28,24 @@ Installation
 
 1.  Clone this repository:
 
-    bash
+```bash
+git clone https://github.com/thinkjk/touchscreen-control-stepmania.git
+``````
+2. Install pip
+```bash
+sudo apt install python3-pip
+```
+3.   Navigate to the cloned directory and install the required Python libraries:
+```bash
+pip3 install pygame pyautogui evdev
+```
+4. For the application to access input devices, you need to grant the necessary permissions. This can be achieved by adding the current user to the `input` group. Note: After executing the command, you may need to log out and log back in for the changes to take effect.
 
--   `git clone <repository_url>`
+Execute the following command:
 
-    -   Navigate to the cloned directory and install the required Python libraries:
-
-1.  `pip install pygame pyautogui evdev`
+```bash
+sudo usermod -a -G input $USER
+```
 
 Usage
 -----
@@ -44,19 +56,16 @@ Usage
 
     To use the startup script:
 
-    bash
-
-1.  `chmod +x path_to_startup_script.sh
-    ./path_to_startup_script.sh`
-
+```bash
+chmod +x path_to_startup_script.sh
+``````
 ### Touchscreen Control Panel
 
 To run the touchscreen control panel for a specific monitor, execute:
 
-bash
-
-`python3 multi_control_panel.py <monitor_number>`
-
+```bash
+python3 multi_control_panel.py <monitor_number>
+``````
 Replace `<monitor_number>` with either `1` or `2` depending on the monitor you want to use.
 
 How It Works
@@ -84,8 +93,7 @@ Contributions are welcome! Please open an issue or submit a pull request if you 
 License
 -------
 
-This project is open source, licensed under the [MIT License](https://chat.openai.com/c/LICENSE).
-
+Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
 <!-- CONTACT -->
@@ -93,7 +101,7 @@ This project is open source, licensed under the [MIT License](https://chat.opena
 
 Jason Kramer - [Website](thinkjk.com) - jkramer@thinkjk.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Project Link: [https://github.com/thinkjk/touchscreen-control-stepmaniae](https://github.com/thinkjk/touchscreen-control-stepmania)
 
 
 
@@ -101,7 +109,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 ## Acknowledgments
 
 * All images made by [ESB Studio](https://www.instagram.com/esbstudios/)
-* Models made/modified by [Wei Chen](???)
+* Model modified by [Wei Chen Lin](???)
 
 
 
