@@ -17,8 +17,6 @@ BUTTON_IMAGES = {
     for name in ["up", "down", "left", "right", "start", "escape"]
 }
 
-
-
 # Define positions for buttons on the screen.
 BUTTON_POSITIONS = {
     "up": (320, 50),

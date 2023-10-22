@@ -17,7 +17,7 @@ Features
 
 Notes
 -------------
-Currently running with two of these monitors: https://www.amazon.com/ELECROW-Raspberry-Touchscreen-Monitor-HDMI-Compatible/dp/B07FDYXPT7/
+Currently running with two of these touchscreens: https://www.amazon.com/ELECROW-Raspberry-Touchscreen-Monitor-HDMI-Compatible/dp/B07FDYXPT7/
 
 On an Intel NUC running Ubuntu 22.04 LTS
 
@@ -69,6 +69,7 @@ python3 evdev_monitor_list.py
 The script will list all connected input devices, along with their paths, names, and physical IDs. Look for your touchscreen device in the list and note down its physical ID. This ID will be used to dynamically determine the device paths for touchscreens in the main application.
 
 Note: Ensure you have the necessary permissions to access the input devices. If you encounter permission issues, refer to the "Granting Permissions for Input Devices" section in this README.
+
 ### Startup Script
 
 1.  Before starting the game, you can use the provided startup script. This script ensures the proper order of operations and logs debug information to `/tmp/startup_log.txt`.
@@ -113,16 +114,6 @@ License
 -------
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-
-<!-- CONTACT -->
-## Contact
-
-Jason Kramer - [Website](thinkjk.com) - jkramer@thinkjk.com
-
-Project Link: [https://github.com/thinkjk/touchscreen-control-stepmaniae](https://github.com/thinkjk/touchscreen-control-stepmania)
-
-
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
