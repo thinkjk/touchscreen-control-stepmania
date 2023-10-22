@@ -4,7 +4,7 @@ Touchscreen Control for StepMania
 
 This application provides a touchscreen interface to control the StepMania game. It enables users to play the game using touchscreen devices as inputs.
 
-![Touchscreen Control for StepMania Demo](https://chat.openai.com/c/demo-image-placeholder.png)
+![Touchscreen Control for StepMania Demo](some_image.png)
 
 Features
 --------
@@ -13,6 +13,13 @@ Features
 -   Displays graphical buttons for game controls.
 -   Supports dual monitor setups.
 -   Simulates key presses in response to touchscreen events.
+
+
+Notes
+-------------
+Currently running with two of these monitors: https://www.amazon.com/ELECROW-Raspberry-Touchscreen-Monitor-HDMI-Compatible/dp/B07FDYXPT7/
+
+On an Intel NUC running Ubuntu 22.04 LTS
 
 Prerequisites
 -------------
