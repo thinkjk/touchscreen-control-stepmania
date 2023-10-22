@@ -68,7 +68,18 @@ python3 evdev_monitor_list.py
 ```
 The script will list all connected input devices, along with their paths, names, and physical IDs. Look for your touchscreen device in the list and note down its physical ID. This ID will be used to dynamically determine the device paths for touchscreens in the main application.
 
+### These ID's need to be changed in the script to match the ID's of your hardware!
+
 Note: Ensure you have the necessary permissions to access the input devices. If you encounter permission issues, refer to the "Granting Permissions for Input Devices" section in this README.
+
+### Customizing Button Mapping
+
+The `control_panel.py` script contains predefined button mappings that correspond to keyboard keys for the game controls. If you wish to customize these mappings to better suit your setup or preferences, you can do so directly in the `control_panel.py` file.
+
+### Steps to Customize Button Mapping:
+
+1. Open the `control_panel.py` file in your preferred text editor and update the `BUTTON_KEY_MAPPING` for each monitor as needed.
+
 
 ### Startup Script
 
