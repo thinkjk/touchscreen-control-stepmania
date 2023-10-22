@@ -50,6 +50,18 @@ sudo usermod -a -G input $USER
 Usage
 -----
 
+#### Finding the Physical ID of the Touchscreen Monitor
+
+To determine the physical ID of your touchscreen monitor, you'll need to use the `evdev_monitor_list` script provided in this repository.
+
+Run the script:
+
+```bash
+python3 evdev_monitor_list.py
+```
+The script will list all connected input devices, along with their paths, names, and physical IDs. Look for your touchscreen device in the list and note down its physical ID. This ID will be used to dynamically determine the device paths for touchscreens in the main application.
+
+Note: Ensure you have the necessary permissions to access the input devices. If you encounter permission issues, refer to the "Granting Permissions for Input Devices" section in this README.
 ### Startup Script
 
 1.  Before starting the game, you can use the provided startup script. This script ensures the proper order of operations and logs debug information to `/tmp/startup_log.txt`.
@@ -64,7 +76,7 @@ chmod +x path_to_startup_script.sh
 To run the touchscreen control panel for a specific monitor, execute:
 
 ```bash
-python3 multi_control_panel.py <monitor_number>
+python3 control_panel.py <monitor_number>
 ``````
 Replace `<monitor_number>` with either `1` or `2` depending on the monitor you want to use.
 
@@ -109,7 +121,7 @@ Project Link: [https://github.com/thinkjk/touchscreen-control-stepmaniae](https:
 ## Acknowledgments
 
 * All images made by [ESB Studio](https://www.instagram.com/esbstudios/)
-* Model modified by [Wei Chen Lin](???)
+* Model modified by [Wei Chen Lin]
 
 
 
