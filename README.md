@@ -121,39 +121,4 @@ Project Link: [https://github.com/thinkjk/touchscreen-control-stepmaniae](https:
 ## Acknowledgments
 
 * All images made by [ESB Studio](https://www.instagram.com/esbstudios/)
-* Model modified by [Wei Chen Lin]
-
-
-
-<!-- #!/bin/bash
-
-# Log file for debugging
-LOG_FILE="/tmp/startup_log.txt"
-
-# Update the package list and install necessary dependencies
-sudo apt-get update
-sudo apt-get install -y python3-pip libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsdl1.2-dev libsmpeg-dev python3-numpy subversion libportmidi-dev ffmpeg libswscale-dev libavformat-dev libavcodec-dev x11-xserver-utils evtest
-
-# Install Python packages
-pip3 install pygame pyautogui evdev
-
-# Add the current user to the input group to grant permissions to access input devices
-sudo usermod -a -G input $USER
-
-# Notify user to log out and log back in for group changes to take effect
-echo "Please log out and log back in to apply group changes."
-
-#disable xhost access control
-xhost +
-
-# Start itgmania
-/opt/itgmania/itgmania &
-
-# Wait for 5 seconds for correct order of operations
-sleep 5
-
-# Start the first monitor Python script 
-python3 /home/jason/touchscreen-control-stepmania/multi_control_panel.py 1 >> $LOG_FILE 2>&1 &
-
-# Start the second monitor Python script
-python3 /home/jason/touchscreen-control-stepmania/multi_control_panel.py 2 >> $LOG_FILE 2>&1 & -->
+* Model modified by Wei Chen Lin
