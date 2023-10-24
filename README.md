@@ -17,7 +17,7 @@ Features
 
 Notes
 -------------
-Currently running with two of these touchscreens: https://www.amazon.com/ELECROW-Raspberry-Touchscreen-Monitor-HDMI-Compatible/dp/B07FDYXPT7/
+Currently running ITGMania with two of these touchscreens: https://www.amazon.com/ELECROW-Raspberry-Touchscreen-Monitor-HDMI-Compatible/dp/B07FDYXPT7/
 
 On an Intel NUC running Ubuntu 22.04 LTS
 
@@ -25,6 +25,7 @@ Prerequisites
 -------------
 
 -   Python 3
+-   tkinkter
 -   pip
 -   `pygame` library
 -   `pyautogui` library
@@ -38,9 +39,9 @@ Installation
 ```bash
 git clone https://github.com/thinkjk/touchscreen-control-stepmania.git
 ``````
-2. Install pip
+2. Install pip and tkinter
 ```bash
-sudo apt install python3-pip
+sudo apt-get install python3-pip python3-tk
 ```
 3.   Navigate to the cloned directory and install the required Python libraries:
 ```bash
@@ -56,6 +57,10 @@ sudo usermod -a -G input $USER
 
 Usage
 -----
+
+#### Touchscreen Positions
+
+This application relies on the touchscreen to be in a fixed position. Please refer to the picture on how I set up my touchscreens.
 
 #### Finding the Physical ID of the Touchscreen Monitor
 
@@ -131,3 +136,8 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 * All images made by [ESB Studio](https://www.instagram.com/esbstudios/)
 * Model modified by Wei Chen Lin
+
+## TODO
+* Add images
+* Have touchscreen position be dynamic so the location isn't fixed in code
+* Have an easier way to detect physical ID of the touchscreens
